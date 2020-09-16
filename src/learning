@@ -1,0 +1,52 @@
+ to get the token first of all you have to store it in the local storage : 
+ // like this
+ 
+ //storing the token in the local storage
+ localStorage.setItem('token' , something i dont understand)
+ // getting token from local storage
+ this.state = {
+     token : localStorage.getItem('token')
+ }
+
+// then 
+const token = getState().auth.token
+
+// creating header
+
+const config = {
+    headers : {
+        "content-type" : "application/json"
+    }
+}
+
+// if there is a token add it to the header
+
+if(token){
+    config.headers['x-auth-token'] = token
+
+}
+
+axios.get(path , config)
+.then(res => 
+this.setState({
+    kida : res.payload
+}))
+
+
+//-----------------------------------------------------------------------------------------//
+
+login(){
+    let name = JSON.stringify(this.state)
+    return(
+        axios.post(url , name)
+        .then( (resonse) => {
+            response.json().then( (result) => {
+                console.log(result)
+                localStorage.setItem( 'login' , JSON.stringify({
+                    login : true , 
+                    token : result.login
+                }) )
+            })
+        })
+    )
+}
